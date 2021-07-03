@@ -15,6 +15,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;  
 using gavl_api.Data;
 using gavl_api.Models;
+using gavl_api.Services;
+
 namespace gavl_api
 {
     public class Startup
@@ -29,14 +31,17 @@ namespace gavl_api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var jwtSettings = Configuration.GetSection("JWT").Get<JwtSettings>();
+            services.AddCors();
             //ADD db service with default connection
             services.AddDbContext<AppDbContext>(options => 
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<AppUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
-
+            services.Configure<JwtSettings>(Configuration.GetSection("JWT"));
             services.AddControllers();
+            services.AddAuth(jwtSettings);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "gavl_api", Version = "v1" });
@@ -57,7 +62,7 @@ namespace gavl_api
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseAuth();
 
             app.UseEndpoints(endpoints =>
             {
