@@ -16,10 +16,6 @@ using Microsoft.AspNetCore.Identity;
 using gavl_api.Data;
 using gavl_api.Models;
 using gavl_api.Services;
-using gavl_api.Data.Repositories;
-using gavl_api.Data.Services;
-using gavl_api.Domain.Repositories;
-using gavl_api.Domain.Services;
 
 namespace gavl_api
 {
@@ -46,12 +42,11 @@ namespace gavl_api
             services.Configure<JwtSettings>(Configuration.GetSection("JWT"));
             services.AddControllers();
             services.AddAuth(jwtSettings);
-            services.AddScoped<IAccountRepository, AccountRepository>();
-            services.AddScoped<IAccountService, AccountService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "gavl_api", Version = "v1" });
             });
+            services.AddAutoMApper();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
