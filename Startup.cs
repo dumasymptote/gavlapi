@@ -11,7 +11,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;  
+using gavl_api.Data;
+using gavl_api.Models;
 namespace gavl_api
 {
     public class Startup
@@ -26,6 +29,12 @@ namespace gavl_api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //ADD db service with default connection
+            services.AddDbContext<AppDbContext>(options => 
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddIdentity<AppUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
