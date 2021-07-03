@@ -46,7 +46,7 @@ namespace gavl_api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "gavl_api", Version = "v1" });
             });
-            services.AddAutoMApper();
+            services.AddAutoMapper(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
