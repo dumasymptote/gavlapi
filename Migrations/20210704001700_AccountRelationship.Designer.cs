@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using gavl_api.Data;
@@ -9,30 +10,16 @@ using gavl_api.Data;
 namespace gavl_api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210704001700_AccountRelationship")]
+    partial class AccountRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-            modelBuilder.Entity("AppUserClient", b =>
-                {
-                    b.Property<string>("AssignedUsersId")
-                        .HasColumnType("text");
-
-                    b.Property<int>("ClientsId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("AssignedUsersId", "ClientsId");
-
-                    b.HasIndex("ClientsId");
-
-                    b.ToTable("AppUserClient");
-                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -184,7 +171,7 @@ namespace gavl_api.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
-                    b.Property<string>("MailingPostalCode")
+                    b.Property<string>("MailingPostal")
                         .HasMaxLength(9)
                         .HasColumnType("character varying(9)");
 
@@ -208,7 +195,7 @@ namespace gavl_api.Migrations
                             LicensedUsers = 11,
                             MailingAddress = "123 Main St",
                             MailingCity = "Cityopolis",
-                            MailingPostalCode = "12345",
+                            MailingPostal = "12345",
                             MailingState = "DC",
                             Name = "TestAccount1"
                         });
@@ -289,144 +276,6 @@ namespace gavl_api.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("gavl_api.Models.Client", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<int?>("AccountId")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("EngagmentDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.Property<DateTime>("IntakeDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.Property<string>("MailingAddress")
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.Property<string>("MailingAddressLine2")
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.Property<string>("MailingCity")
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.Property<string>("MailingPostalCode")
-                        .HasMaxLength(9)
-                        .HasColumnType("character varying(9)");
-
-                    b.Property<string>("MailingState")
-                        .HasMaxLength(3)
-                        .HasColumnType("character varying(3)");
-
-                    b.Property<string>("OrganizationName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PhoneNumber1")
-                        .HasMaxLength(10)
-                        .HasColumnType("character varying(10)");
-
-                    b.Property<string>("PhoneNumber2")
-                        .HasMaxLength(10)
-                        .HasColumnType("character varying(10)");
-
-                    b.Property<string>("PhysicalAddress")
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.Property<string>("PhysicalAddressLine2")
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.Property<string>("PhysicalCity")
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.Property<string>("PhysicalPostalCode")
-                        .HasMaxLength(9)
-                        .HasColumnType("character varying(9)");
-
-                    b.Property<string>("PhysicalState")
-                        .HasMaxLength(3)
-                        .HasColumnType("character varying(3)");
-
-                    b.Property<int>("SSNFEIN")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccountId");
-
-                    b.ToTable("Clients");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Active = true,
-                            DateOfBirth = new DateTime(1991, 7, 3, 0, 0, 0, 0, DateTimeKind.Local),
-                            Email = "Test@example.com",
-                            EngagmentDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Test",
-                            IntakeDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastName = "Client",
-                            MailingAddress = "123 Test",
-                            MailingAddressLine2 = "Suite 1",
-                            MailingCity = "Testville",
-                            MailingPostalCode = "76553",
-                            MailingState = "TX",
-                            OrganizationName = "Clients Against Testing",
-                            PhoneNumber1 = "2142129004",
-                            PhoneNumber2 = "",
-                            PhysicalAddress = "123 Test",
-                            PhysicalAddressLine2 = "Suite 1",
-                            PhysicalCity = "Testville",
-                            PhysicalPostalCode = "76553",
-                            PhysicalState = "TX",
-                            SSNFEIN = 111111111
-                        });
-                });
-
-            modelBuilder.Entity("AppUserClient", b =>
-                {
-                    b.HasOne("gavl_api.Models.AppUser", null)
-                        .WithMany()
-                        .HasForeignKey("AssignedUsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("gavl_api.Models.Client", null)
-                        .WithMany()
-                        .HasForeignKey("ClientsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -487,19 +336,8 @@ namespace gavl_api.Migrations
                     b.Navigation("Account");
                 });
 
-            modelBuilder.Entity("gavl_api.Models.Client", b =>
-                {
-                    b.HasOne("gavl_api.Models.Account", "Account")
-                        .WithMany("Clients")
-                        .HasForeignKey("AccountId");
-
-                    b.Navigation("Account");
-                });
-
             modelBuilder.Entity("gavl_api.Models.Account", b =>
                 {
-                    b.Navigation("Clients");
-
                     b.Navigation("Users");
                 });
 #pragma warning restore 612, 618

@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-
+using System.Collections.Generic;
 namespace gavl_api.Models
 {
     public class Account
@@ -16,7 +16,9 @@ namespace gavl_api.Models
         [MaxLength(3)]
         public string MailingState {get;set;}
         [MaxLength(9)]
-        public string MailingPostal {get;set;}
+        public string MailingPostalCode {get;set;}
         public int LicensedUsers {get;set;}
+        public List<AppUser> Users {get;set;}
+        public List<Client> Clients {get;set;}
     }
 }

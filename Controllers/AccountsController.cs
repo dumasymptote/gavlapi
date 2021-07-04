@@ -6,9 +6,11 @@ using gavl_api.Models;
 using gavl_api.Data;
 using gavl_api.Data.Repositories;
 using gavl_api.Models.DTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace gavl_api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class AccountsController : ControllerBase
@@ -16,7 +18,7 @@ namespace gavl_api.Controllers
         private readonly AppDbContext _context;
         private readonly GenericRepository<Account> _accountRepo = null;
         private readonly IMapper _mapper;
-
+        //[Roles("Admin, BusinessAdmin")]
         public AccountsController (AppDbContext context, IMapper mapper)
         {
             _context = context;
