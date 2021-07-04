@@ -7,6 +7,7 @@ using gavl_api.Data;
 using gavl_api.Data.Repositories;
 using gavl_api.Models.DTO;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace gavl_api.Controllers
 {
@@ -25,14 +26,15 @@ namespace gavl_api.Controllers
             _accountRepo = new GenericRepository<Account>(context);
             _mapper = mapper;
         }
-
+        [AllowAnonymous]
         [HttpGet]
-        public async Task<IEnumerable<Account>> GetAllAsync()
+        public async Task<ApiResponse> GetAllAsync()
         {
             var accounts = await _accountRepo.ListAsync();
             //this is an example of using automapper but not super useful right now.
             //var accountResource = _mapper.Map<IEnumerable<Account>, IEnumerable<AccountResource>>(accounts);
-            return accounts;
+            var response = new DataResponse(HttpContext.Request, accounts);
+            return response;
         }
     }
 }

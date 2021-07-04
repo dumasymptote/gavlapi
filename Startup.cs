@@ -40,7 +40,7 @@ namespace gavl_api
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
             services.Configure<JwtSettings>(Configuration.GetSection("JWT"));
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
             services.AddAuth(jwtSettings);
             services.AddSwaggerGen(c =>
             {
