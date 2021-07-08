@@ -41,6 +41,7 @@ namespace gavl_api
                 .AddDefaultTokenProviders();
             services.Configure<JwtSettings>(Configuration.GetSection("JWT"));
             services.AddControllers().AddNewtonsoftJson();
+            services.AddHttpContextAccessor();
             services.AddAuth(jwtSettings);
             services.AddSwaggerGen(c =>
             {

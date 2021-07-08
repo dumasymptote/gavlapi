@@ -7,35 +7,22 @@ namespace gavl_api.Models
     {
         public bool success;
         public string httpmethod;
-        public string request;
-
-        public ApiResponse(HttpRequest request)
-        {
-            httpmethod = request.Method.ToString();
-            this.request = request.Path.ToString();
-        }
+        public string url;
+        public string querystring;
         
     }
     public class ErrorResponse : ApiResponse
     {   
-        public ErrorResponse(HttpRequest request): base(request)
-        {
-            success = false;
-        }
         public ApiError error {get;set;}
     }
     public class DataResponse : ApiResponse
     {
-        public DataResponse(HttpRequest request, IEnumerable<dynamic> dat): base(request)
-        {
-            success = true;
-            data = dat;
-        } 
         public IEnumerable<dynamic> data {get;set;} 
     }
     public class ApiError
     {
         public string code { get; set; }
         public string message {get; set;}
+        public string url {get;set;}
     }
 }
