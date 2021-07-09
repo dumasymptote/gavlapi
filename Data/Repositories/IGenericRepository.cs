@@ -7,5 +7,6 @@ namespace gavl_api.Data.Repositories
     {
         Task<IEnumerable<T>> ListAsync();
         Task<T> GetById(object id);
+        Task<T> Update(object id, T obj);
     }
 }

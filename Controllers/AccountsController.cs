@@ -9,6 +9,7 @@ using gavl_api.Models.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using gavl_api.Services;
+using System;
 
 namespace gavl_api.Controllers
 {
@@ -41,11 +42,33 @@ namespace gavl_api.Controllers
         [HttpGet("{id}")]
         public async Task<ApiResponse> GetAccountById(int id)
         {
-            var account = await _accountRepo.GetById(id);
-            if(account != null)
+            try
+            {
+                var account = await _accountRepo.GetById(id);
+                if(account != null)
+                    _response.AddData(new List<Account>{account});
+                else
+                    _response.AddError(new ApiError{code="404",message="No Account Found for this ID", url=$"/accounts/{id}"});
+            }
+            catch(Exception ex)
+            {
+                _response.AddError(new ApiError{code="500",message=$"{ex.Message}", url=$"/accounts/{id}"});
+                return _response.GenerateReponse();
+            }
+            return _response.GenerateReponse();
+        }
+        [HttpPatch("{id}")]
+        public async Task<ApiResponse> UpdateAccount(int id, Account model)
+        {
+            try
+            {
+                var account = await _accountRepo.Update(id, model);
                 _response.AddData(new List<Account>{account});
-            else
-                _response.AddError(new ApiError{code="404",message="No Account Found for this ID", url=$"/accounts/{id}"});
+            }
+            catch(Exception ex)
+            {
+                _response.AddError(new ApiError{code="500",message=$"{ex.Message}", url=$"/accounts/{id}"});                
+            }
             return _response.GenerateReponse();
         }
     }

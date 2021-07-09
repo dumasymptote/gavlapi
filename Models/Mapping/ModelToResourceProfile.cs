@@ -9,6 +9,7 @@ namespace gavl_api.Models.Mapping
         public ModelToResourceProfile()
         {
             CreateMap<Account, AccountResource>();
+            CreateMap<AppUser, UserResource>();
         }
     }
 }
