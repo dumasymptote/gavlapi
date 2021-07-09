@@ -29,7 +29,6 @@ namespace gavl_api.Controllers
             _mapper = mapper;
             _response = new ApiResponseBuilder(httpContext.HttpContext.Request);
         }
-        [AllowAnonymous]
         [HttpGet]
         public async Task<ApiResponse> GetAllAsync()
         {     
@@ -37,6 +36,16 @@ namespace gavl_api.Controllers
             //this is an example of using automapper but not super useful right now.
             //var accountResource = _mapper.Map<IEnumerable<Account>, IEnumerable<AccountResource>>(accounts);
             _response.AddData(accounts);
+            return _response.GenerateReponse();
+        }
+        [HttpGet("{id}")]
+        public async Task<ApiResponse> GetAccountById(int id)
+        {
+            var account = await _accountRepo.GetById(id);
+            if(account != null)
+                _response.AddData(new List<Account>{account});
+            else
+                _response.AddError(new ApiError{code="404",message="No Account Found for this ID", url=$"/accounts/{id}"});
             return _response.GenerateReponse();
         }
     }

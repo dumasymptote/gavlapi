@@ -20,5 +20,9 @@ namespace gavl_api.Data.Repositories
         {
             return await _table.ToListAsync();
         }
+        public async Task<T> GetById(object id)
+        {
+            return await _table.FindAsync(id);
+        }
     }
 }
