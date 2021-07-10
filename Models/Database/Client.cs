@@ -48,6 +48,8 @@ namespace gavl_api.Models
         public DateTime EngagmentDate {get;set;}
         public bool Active {get;set;}
         public Account Account {get;set;}
-        public List<AppUser> AssignedUsers {get;set;}
+        public IEnumerable<AppUser> AssignedUsers {get;set;}
+        public IEnumerable<Case> Cases {get;set;}
+        public IEnumerable<Note> ClientNotes {get;set;}
     }
 }
